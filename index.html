@@ -3,31 +3,48 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Blankpoint - Software Developer & Designer</title>
+    <title>Blankpoint - Modern Software Development & Design</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css" />
     <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
     <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/flag-icons/6.6.6/css/flag-icons.min.css" />
     <script>
       tailwind.config = {
         theme: {
           extend: {
             colors: {
-              purple: {
-                600: "#7c3aed",
-                700: "#6d28d9",
-                800: "#5b21b6",
+              primary: "#6366f1",
+              secondary: "#0f172a",
+              accent: "#3b82f6",
+              gradient: {
+                start: "#6366f1",
+                end: "#8b5cf6",
               },
             },
             animation: {
               float: "float 6s ease-in-out infinite",
-              "float-fast": "float 4s ease-in-out infinite",
-              "pulse-slow": "pulse 6s cubic-bezier(0.4, 0, 0.6, 1) infinite",
+              "float-delayed": "float 6s ease-in-out infinite 2s",
+              glow: "glow 2s ease-in-out infinite alternate",
+              "slide-up": "slideUp 0.5s ease-out forwards",
+              "slide-down": "slideDown 0.3s ease-out forwards",
             },
             keyframes: {
               float: {
-                "0%, 100%": { transform: "translateY(0)" },
+                "0%, 100%": { transform: "translateY(0px)" },
                 "50%": { transform: "translateY(-20px)" },
+              },
+              glow: {
+                "0%": { boxShadow: "0 0 20px rgba(99, 102, 241, 0.3)" },
+                "100%": { boxShadow: "0 0 30px rgba(99, 102, 241, 0.6)" },
+              },
+              slideUp: {
+                "0%": { transform: "translateY(100px)", opacity: "0" },
+                "100%": { transform: "translateY(0)", opacity: "1" },
+              },
+              slideDown: {
+                "0%": { transform: "translateY(-100%)", opacity: "0" },
+                "100%": { transform: "translateY(0)", opacity: "1" },
               },
             },
           },
@@ -35,131 +52,292 @@
       };
     </script>
     <style>
-      @keyframes gradient {
-        0% {
-          background-position: 0% 50%;
-        }
-        50% {
-          background-position: 100% 50%;
-        }
-        100% {
-          background-position: 0% 50%;
-        }
+      .glass-effect {
+        background: rgba(255, 255, 255, 0.1);
+        backdrop-filter: blur(10px);
+        border: 1px solid rgba(255, 255, 255, 0.2);
       }
 
-      .gradient-animate {
-        background-size: 200% 200%;
-        animation: gradient 8s ease infinite;
+      .dark-glass {
+        background: rgba(15, 23, 42, 0.95);
+        backdrop-filter: blur(20px);
+        border-bottom: 1px solid rgba(99, 102, 241, 0.2);
       }
 
-      .hover-scale {
-        transition: transform 0.3s ease;
+      .gradient-text {
+        background: linear-gradient(135deg, #6366f1, #8b5cf6);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
       }
 
-      .hover-scale:hover {
-        transform: scale(1.03);
+      .hero-gradient {
+        background: linear-gradient(135deg, #0f172a 0%, #1e293b 50%, #334155 100%);
       }
 
-      .card-hover {
-        transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+      .card-gradient {
+        background: linear-gradient(145deg, #ffffff 0%, #f8fafc 100%);
       }
 
-      .card-hover:hover {
-        box-shadow: 0 14px 28px rgba(0, 0, 0, 0.1), 0 10px 10px rgba(0, 0, 0, 0.08);
-        transform: translateY(-5px);
+      .hover-lift {
+        transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
       }
 
-      .btn-hover {
+      .hover-lift:hover {
+        transform: translateY(-8px) scale(1.02);
+        box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
+      }
+
+      .tech-card:hover {
+        background: linear-gradient(135deg, #6366f1, #8b5cf6);
+        color: white;
+      }
+
+      .tech-card:hover .tech-icon {
+        color: white;
+      }
+
+      .project-card {
+        background: linear-gradient(145deg, #ffffff, #f1f5f9);
+        border: 2px solid transparent;
+        transition: all 0.4s ease;
+      }
+
+      .project-card:hover {
+        border: 2px solid #6366f1;
+        transform: translateY(-10px) scale(1.03);
+        box-shadow: 0 25px 50px rgba(99, 102, 241, 0.2);
+      }
+
+      .mobile-menu {
+        background: rgba(15, 23, 42, 0.98);
+        backdrop-filter: blur(20px);
+        transform: translateX(100%);
+        transition: transform 0.3s ease-in-out;
+      }
+
+      .mobile-menu.active {
+        transform: translateX(0);
+      }
+
+      .hamburger {
+        width: 24px;
+        height: 24px;
+        position: relative;
+        cursor: pointer;
+      }
+
+      .hamburger span {
+        display: block;
+        width: 100%;
+        height: 2px;
+        background: white;
+        border-radius: 1px;
         transition: all 0.3s ease;
-        transform-origin: center;
+        position: absolute;
       }
 
-      .btn-hover:hover {
-        transform: translateY(-2px) scale(1.02);
-        box-shadow: 0 10px 20px rgba(124, 58, 237, 0.3);
+      .hamburger span:nth-child(1) {
+        top: 5px;
+      }
+      .hamburger span:nth-child(2) {
+        top: 11px;
+      }
+      .hamburger span:nth-child(3) {
+        top: 17px;
+      }
+
+      .hamburger.active span:nth-child(1) {
+        transform: rotate(45deg);
+        top: 11px;
+      }
+
+      .hamburger.active span:nth-child(2) {
+        opacity: 0;
+      }
+
+      .hamburger.active span:nth-child(3) {
+        transform: rotate(-45deg);
+        top: 11px;
+      }
+
+      .language-dropdown {
+        opacity: 0;
+        transform: translateY(-10px);
+        visibility: hidden;
+        transition: all 0.3s ease;
+      }
+
+      .language-dropdown.active {
+        opacity: 1;
+        transform: translateY(0);
+        visibility: visible;
       }
     </style>
   </head>
-  <body class="bg-white">
-    <!-- Sticky Header -->
-    <nav class="sticky top-0 z-50 bg-white/95 backdrop-blur-sm shadow-md transition-all duration-300">
-      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div class="flex items-center justify-between h-16">
-          <!-- Logo -->
-          <div class="flex items-center">
-            <div class="bg-purple-600 p-2 rounded-lg hover:rotate-12 transition-transform duration-300">
-              <svg class="w-6 h-6 text-white" fill="currentColor" viewBox="0 0 24 24">
-                <path d="M12 2L2 7v10c0 5.55 3.84 9.74 9 11 5.16-1.26 9-5.45 9-11V7l-10-5z" />
-              </svg>
+  <body class="bg-slate-50">
+    <!-- Modern Navigation -->
+    <nav class="fixed top-0 w-full z-50 transition-all duration-500" id="navbar">
+      <div class="dark-glass">
+        <div class="max-w-7xl mx-auto px-4 lg:px-6">
+          <div class="flex items-center justify-between h-16">
+            <!-- Logo -->
+            <div class="flex items-center space-x-3 z-10">
+              <div class="relative">
+                <div class="w-10 h-10 bg-gradient-to-br from-primary to-purple-600 rounded-xl flex items-center justify-center">
+                  <svg class="w-6 h-6 text-white" fill="currentColor" viewBox="0 0 24 24">
+                    <path d="M12 2L13.09 8.26L18 7L14.74 12L18 17L13.09 15.74L12 22L10.91 15.74L6 17L9.26 12L6 7L10.91 8.26L12 2Z" />
+                  </svg>
+                </div>
+                <div class="absolute -top-1 -right-1 w-4 h-4 bg-primary rounded-full animate-pulse"></div>
+              </div>
+              <span class="text-xl font-black text-white tracking-tight">BLANKPOINT</span>
             </div>
-            <span class="ml-2 text-xl font-bold text-gray-900 animate__animated animate__fadeIn">BLANKPOINT</span>
-          </div>
 
-          <!-- Desktop Navigation -->
-          <div class="hidden md:block">
-            <div class="ml-10 flex items-baseline space-x-8">
-              <a href="#home" class="text-gray-700 hover:text-purple-600 px-3 py-2 text-sm font-medium transition-colors duration-300 relative group">
-                Home
-                <span class="absolute bottom-0 left-0 w-0 h-0.5 bg-purple-600 transition-all duration-300 group-hover:w-full"></span>
-              </a>
-              <a href="#about" class="text-gray-700 hover:text-purple-600 px-3 py-2 text-sm font-medium transition-colors duration-300 relative group">
-                About
-                <span class="absolute bottom-0 left-0 w-0 h-0.5 bg-purple-600 transition-all duration-300 group-hover:w-full"></span>
-              </a>
-              <a href="#project" class="text-gray-700 hover:text-purple-600 px-3 py-2 text-sm font-medium transition-colors duration-300 relative group">
-                Project
-                <span class="absolute bottom-0 left-0 w-0 h-0.5 bg-purple-600 transition-all duration-300 group-hover:w-full"></span>
-              </a>
-              <a href="#pricing" class="text-gray-700 hover:text-purple-600 px-3 py-2 text-sm font-medium transition-colors duration-300 relative group">
-                Pricing
-                <span class="absolute bottom-0 left-0 w-0 h-0.5 bg-purple-600 transition-all duration-300 group-hover:w-full"></span>
-              </a>
-              <button class="bg-purple-600 text-white px-4 py-2 rounded-lg text-sm font-medium hover:bg-purple-700 transition-all duration-300 btn-hover shadow-lg">Contact Us</button>
+            <!-- Desktop Menu -->
+            <div class="hidden lg:flex items-center justify-center flex-1">
+              <div class="flex items-center space-x-8">
+                <a href="#home" class="nav-link text-slate-300 hover:text-primary transition-all duration-300 font-medium relative group" data-key="nav_home">
+                  Beranda
+                  <span class="absolute -bottom-1 left-0 w-0 h-0.5 bg-primary transition-all duration-300 group-hover:w-full"></span>
+                </a>
+                <a href="#about" class="nav-link text-slate-300 hover:text-primary transition-all duration-300 font-medium relative group" data-key="nav_about">
+                  Tentang
+                  <span class="absolute -bottom-1 left-0 w-0 h-0.5 bg-primary transition-all duration-300 group-hover:w-full"></span>
+                </a>
+                <a href="#projects" class="nav-link text-slate-300 hover:text-primary transition-all duration-300 font-medium relative group" data-key="nav_projects">
+                  Project
+                  <span class="absolute -bottom-1 left-0 w-0 h-0.5 bg-primary transition-all duration-300 group-hover:w-full"></span>
+                </a>
+                <a href="#contact" class="nav-link text-slate-300 hover:text-primary transition-all duration-300 font-medium relative group" data-key="nav_contact">
+                  Kontak
+                  <span class="absolute -bottom-1 left-0 w-0 h-0.5 bg-primary transition-all duration-300 group-hover:w-full"></span>
+                </a>
+              </div>
             </div>
-          </div>
 
-          <!-- Mobile menu button -->
-          <div class="md:hidden">
-            <button id="mobile-menu-button" class="text-gray-700 hover:text-purple-600 focus:outline-none transition-colors duration-300">
-              <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
-              </svg>
-            </button>
+            <!-- Desktop CTA & Language -->
+            <div class="hidden lg:flex items-center space-x-4">
+              <!-- Language Switcher -->
+              <div class="relative">
+                <button id="lang-toggle" class="flex items-center space-x-2 text-slate-300 hover:text-white transition-colors duration-300 px-3 py-2 rounded-lg hover:bg-white/10">
+                  <span class="fi fi-id w-4 h-4 rounded-sm"></span>
+                  <span class="text-sm font-medium">ID</span>
+                  <svg class="w-4 h-4 transition-transform duration-300" id="lang-arrow" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+                  </svg>
+                </button>
+                <div id="lang-dropdown" class="language-dropdown absolute top-full right-0 mt-2 w-32 bg-slate-800 rounded-lg shadow-xl border border-slate-700 overflow-hidden">
+                  <button data-lang="id" class="lang-option w-full flex items-center space-x-3 px-4 py-3 text-slate-300 hover:bg-slate-700 hover:text-white transition-colors duration-200">
+                    <span class="fi fi-id w-4 h-4 rounded-sm"></span>
+                    <span class="text-sm">Indonesia</span>
+                  </button>
+                  <button data-lang="en" class="lang-option w-full flex items-center space-x-3 px-4 py-3 text-slate-300 hover:bg-slate-700 hover:text-white transition-colors duration-200">
+                    <span class="fi fi-us w-4 h-4 rounded-sm"></span>
+                    <span class="text-sm">English</span>
+                  </button>
+                </div>
+              </div>
+
+              <button class="bg-gradient-to-r from-primary to-purple-600 text-white px-6 py-2.5 rounded-xl font-semibold hover:shadow-xl hover:scale-105 transition-all duration-300" data-key="cta_button">Mari Terhubung</button>
+            </div>
+
+            <!-- Mobile Menu Button -->
+            <div class="lg:hidden flex items-center space-x-3">
+              <!-- Mobile Language Switcher -->
+              <div class="relative">
+                <button id="mobile-lang-toggle" class="flex items-center space-x-2 text-slate-300 hover:text-white transition-colors duration-300 p-2 rounded-lg hover:bg-white/10">
+                  <span class="fi fi-id w-4 h-4 rounded-sm"></span>
+                  <span class="text-xs font-medium">ID</span>
+                </button>
+              </div>
+
+              <button id="mobile-menu-btn" class="hamburger">
+                <span></span>
+                <span></span>
+                <span></span>
+              </button>
+            </div>
           </div>
         </div>
       </div>
 
-      <!-- Mobile Navigation -->
-      <div id="mobile-menu" class="md:hidden hidden animate__animated animate__fadeInDown">
-        <div class="px-2 pt-2 pb-3 space-y-1 sm:px-3 bg-white border-t">
-          <a href="#home" class="text-gray-700 hover:text-purple-600 block px-3 py-2 text-base font-medium transition-colors duration-300">Home</a>
-          <a href="#about" class="text-gray-700 hover:text-purple-600 block px-3 py-2 text-base font-medium transition-colors duration-300">About</a>
-          <a href="#project" class="text-gray-700 hover:text-purple-600 block px-3 py-2 text-base font-medium transition-colors duration-300">Project</a>
-          <a href="#pricing" class="text-gray-700 hover:text-purple-600 block px-3 py-2 text-base font-medium transition-colors duration-300">Pricing</a>
-          <button class="bg-purple-600 text-white px-4 py-2 rounded-lg text-base font-medium hover:bg-purple-700 w-full text-left transition-colors duration-300">Contact Us</button>
+      <!-- Mobile Menu -->
+      <div id="mobile-menu" class="mobile-menu fixed inset-y-0 right-0 w-80 lg:hidden z-40">
+        <div class="flex flex-col h-full pt-20 px-6">
+          <div class="flex flex-col space-y-6">
+            <a href="#home" class="mobile-nav-link text-white text-xl font-semibold hover:text-primary transition-colors duration-300" data-key="nav_home">Beranda</a>
+            <a href="#about" class="mobile-nav-link text-white text-xl font-semibold hover:text-primary transition-colors duration-300" data-key="nav_about">Tentang</a>
+            <a href="#projects" class="mobile-nav-link text-white text-xl font-semibold hover:text-primary transition-colors duration-300" data-key="nav_projects">Project</a>
+            <a href="#contact" class="mobile-nav-link text-white text-xl font-semibold hover:text-primary transition-colors duration-300" data-key="nav_contact">Kontak</a>
+          </div>
+
+          <!-- Mobile Language Options -->
+          <div class="mt-8 pt-6 border-t border-slate-700">
+            <p class="text-slate-400 text-sm mb-4" data-key="language_label">Bahasa</p>
+            <div class="flex flex-col space-y-3">
+              <button data-lang="id" class="mobile-lang-option flex items-center space-x-3 text-slate-300 hover:text-white transition-colors duration-200">
+                <span class="fi fi-id w-5 h-5 rounded"></span>
+                <span>Indonesia</span>
+              </button>
+              <button data-lang="en" class="mobile-lang-option flex items-center space-x-3 text-slate-300 hover:text-white transition-colors duration-200">
+                <span class="fi fi-us w-5 h-5 rounded"></span>
+                <span>English</span>
+              </button>
+            </div>
+          </div>
+
+          <div class="mt-8">
+            <button class="w-full bg-gradient-to-r from-primary to-purple-600 text-white px-6 py-3 rounded-xl font-semibold hover:shadow-xl transition-all duration-300" data-key="cta_button">Mari Terhubung</button>
+          </div>
         </div>
       </div>
+
+      <!-- Mobile Menu Overlay -->
+      <div id="mobile-menu-overlay" class="fixed inset-0 bg-black bg-opacity-50 lg:hidden z-30 opacity-0 invisible transition-all duration-300"></div>
     </nav>
 
     <!-- Hero Section -->
-    <section id="home" class="bg-gradient-to-br from-purple-600 to-purple-800 text-white py-20 gradient-animate">
-      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
-          <div data-aos="fade-right" data-aos-duration="800">
-            <h1 class="text-4xl md:text-5xl font-bold mb-6 animate__animated animate__fadeInDown">
-              Blankpoint Software<br />
-              Developer & Designer
+    <section id="home" class="min-h-screen hero-gradient flex items-center relative overflow-hidden">
+      <!-- Background Effects -->
+      <div class="absolute inset-0">
+        <div class="absolute top-20 left-10 w-72 h-72 bg-primary rounded-full opacity-10 animate-float"></div>
+        <div class="absolute bottom-20 right-10 w-96 h-96 bg-purple-500 rounded-full opacity-10 animate-float-delayed"></div>
+        <div class="absolute top-1/2 left-1/2 w-64 h-64 bg-accent rounded-full opacity-5 animate-pulse"></div>
+      </div>
+
+      <div class="max-w-7xl mx-auto px-6 py-20 relative z-10">
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
+          <div data-aos="fade-right" data-aos-duration="1000">
+            <div class="mb-6">
+              <span class="inline-block bg-gradient-to-r from-primary to-purple-600 text-white px-4 py-2 rounded-full text-sm font-semibold mb-4 animate-bounce" data-key="hero_badge"> 🚀 Solusi Digital Modern </span>
+            </div>
+            <h1 class="text-5xl md:text-7xl font-black mb-6 leading-tight">
+              <span class="text-white" data-key="hero_title_1">Go Digital</span><br />
+              <span class="gradient-text" data-key="hero_title_2">Dengan ERP System</span><br />
+              <span class="text-white" data-key="hero_title_3">Blankpoint.net</span>
             </h1>
-            <p class="text-lg mb-8 text-purple-100 animate__animated animate__fadeIn animate__delay-1s">Inovasi dan kreativitas menciptakan solusi digital dalam berbagai skala dengan pengalaman yang luar biasa untuk semua pelanggan.</p>
-            <button class="bg-white text-purple-600 px-8 py-3 rounded-lg font-semibold hover:bg-gray-100 transition duration-300 btn-hover animate__animated animate__fadeInUp animate__delay-1s">Check Our Project</button>
+            <p class="text-xl text-slate-300 mb-10 leading-relaxed max-w-lg" data-key="hero_description">Kami membangun solusi digital yang mengubah ide Anda menjadi kenyataan dengan teknologi terdepan dan desain yang memukau.</p>
+            <div class="flex flex-col sm:flex-row gap-4">
+              <button class="bg-gradient-to-r from-primary to-purple-600 text-white px-8 py-4 rounded-xl font-bold text-lg hover:shadow-2xl hover:scale-105 transition-all duration-300" data-key="hero_cta_primary">Mulai Project</button>
+              <button class="glass-effect text-white px-8 py-4 rounded-xl font-semibold hover:bg-white/20 transition-all duration-300" data-key="hero_cta_secondary">Lihat Portfolio</button>
+            </div>
           </div>
-          <div class="flex justify-center" data-aos="fade-left" data-aos-duration="800">
-            <div class="relative flex items-center justify-center">
-              <!-- Floating circles background -->
-              <div class="w-80 h-80 bg-purple-500 rounded-full opacity-20 absolute top-0 left-0 animate-float"></div>
-              <div class="w-60 h-60 bg-purple-400 rounded-full opacity-20 absolute bottom-0 right-0 animate-float-fast"></div>
-              <!-- Illustration Image -->
-              <img src="/img/bpoint_illustration.png" alt="Blankpoint Illustration" class="relative z-10 w-100 max-w-full rounded-2xl animate__animated animate__fadeIn" />
+
+          <div class="flex justify-center" data-aos="fade-left" data-aos-duration="1000">
+            <div class="relative">
+              <div class="w-80 h-80 bg-gradient-to-br from-primary to-purple-600 rounded-3xl transform rotate-6 hover:rotate-3 transition-transform duration-500 opacity-20 absolute"></div>
+              <div class="w-80 h-80 glass-effect rounded-3xl transform -rotate-6 hover:rotate-0 transition-transform duration-500 flex items-center justify-center relative z-10">
+                <div class="text-center">
+                  <div class="w-24 h-24 bg-gradient-to-br from-primary to-purple-600 rounded-2xl mx-auto mb-6 flex items-center justify-center">
+                    <svg class="w-12 h-12 text-white" fill="currentColor" viewBox="0 0 24 24">
+                      <path d="M12 2L13.09 8.26L18 7L14.74 12L18 17L13.09 15.74L12 22L10.91 15.74L6 17L9.26 12L6 7L10.91 8.26L12 2Z" />
+                    </svg>
+                  </div>
+                  <h3 class="text-2xl font-bold text-white mb-2" data-key="hero_card_title">Inovasi</h3>
+                  <p class="text-slate-300" data-key="hero_card_subtitle">Driven Development</p>
+                </div>
+              </div>
             </div>
           </div>
         </div>
@@ -167,271 +345,305 @@
     </section>
 
     <!-- Services Section -->
-    <section class="py-20 bg-gray-50">
-      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <section class="py-24 bg-white relative">
+      <div class="max-w-7xl mx-auto px-6">
+        <div class="text-center mb-16" data-aos="fade-up">
+          <span class="text-primary font-semibold text-lg mb-2 block" data-key="services_label">KEAHLIAN KAMI</span>
+          <h2 class="text-4xl md:text-5xl font-black text-secondary mb-4" data-key="services_title">Apa yang Kami Ciptakan</h2>
+          <p class="text-xl text-slate-600 max-w-3xl mx-auto" data-key="services_description">Dari konsep hingga implementasi, kami menghadirkan solusi teknologi yang mengubah cara Anda berbisnis.</p>
+        </div>
+
         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
           <!-- Service 1 -->
-          <div class="bg-white rounded-lg p-6 shadow-sm hover:shadow-md transition duration-300 card-hover" data-aos="fade-up" data-aos-delay="0">
-            <div class="w-12 h-12 bg-purple-100 rounded-lg flex items-center justify-center mb-4 hover:rotate-12 transition-transform duration-300">
-              <svg class="w-6 h-6 text-purple-600" fill="currentColor" viewBox="0 0 24 24">
-                <path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+          <div class="tech-card card-gradient rounded-2xl p-8 hover-lift cursor-pointer group" data-aos="fade-up" data-aos-delay="0">
+            <div class="w-16 h-16 bg-gradient-to-br from-blue-500 to-blue-600 rounded-2xl flex items-center justify-center mb-6 group-hover:scale-110 transition-transform duration-300 tech-icon">
+              <svg class="w-8 h-8 text-white" fill="currentColor" viewBox="0 0 24 24">
+                <path d="M12 2L2 7V17C2 22.55 5.84 26.74 11 28C16.16 26.26 20 22.55 20 17V7L12 2Z" />
               </svg>
             </div>
-            <h3 class="text-lg font-semibold mb-2">Software Development</h3>
-            <p class="text-gray-600 text-sm">Kami menyediakan solusi pengembangan perangkat lunak yang inovatif dan berkualitas tinggi untuk memenuhi kebutuhan bisnis Anda.</p>
+            <h3 class="text-xl font-bold text-secondary mb-4 group-hover:text-white transition-colors duration-300" data-key="service_1_title">Software Development</h3>
+            <p class="text-slate-600 group-hover:text-slate-200 transition-colors duration-300" data-key="service_1_description">Aplikasi web dan mobile yang powerful dengan performa optimal dan user experience yang luar biasa.</p>
           </div>
 
           <!-- Service 2 -->
-          <div class="bg-white rounded-lg p-6 shadow-sm hover:shadow-md transition duration-300 card-hover" data-aos="fade-up" data-aos-delay="100">
-            <div class="w-12 h-12 bg-purple-100 rounded-lg flex items-center justify-center mb-4 hover:rotate-12 transition-transform duration-300">
-              <svg class="w-6 h-6 text-purple-600" fill="currentColor" viewBox="0 0 24 24">
-                <path d="M21 12a9 9 0 01-9 9m9-9a9 9 0 00-9-9m9 9H3m9 9a9 9 0 01-9-9m9 9c1.657 0 3-4.03 3-9s-1.343-9-3-9m0 18c-1.657 0-3-4.03-3-9s1.343-9 3-9m-9 9a9 9 0 019-9" />
+          <div class="tech-card card-gradient rounded-2xl p-8 hover-lift cursor-pointer group" data-aos="fade-up" data-aos-delay="100">
+            <div class="w-16 h-16 bg-gradient-to-br from-green-500 to-green-600 rounded-2xl flex items-center justify-center mb-6 group-hover:scale-110 transition-transform duration-300">
+              <svg class="w-8 h-8 text-white" fill="currentColor" viewBox="0 0 24 24">
+                <path d="M3 12C3 7.03 7.03 3 12 3S21 7.03 21 12 16.97 21 12 21 3 16.97 3 12M12 1C5.93 1 1 5.93 1 12S5.93 23 12 23 23 18.07 23 12 18.07 1 12 1M12 15A3 3 0 1 0 12 9A3 3 0 0 0 12 15Z" />
               </svg>
             </div>
-            <h3 class="text-lg font-semibold mb-2">Website Development</h3>
-            <p class="text-gray-600 text-sm">Membangun website yang responsif dan modern dengan teknologi terbaru untuk meningkatkan kehadiran online Anda.</p>
+            <h3 class="text-xl font-bold text-secondary mb-4 group-hover:text-white transition-colors duration-300" data-key="service_2_title">UI/UX Design</h3>
+            <p class="text-slate-600 group-hover:text-slate-200 transition-colors duration-300" data-key="service_2_description">Desain interface yang intuitif dan engaging dengan fokus pada pengalaman pengguna yang sempurna.</p>
           </div>
 
           <!-- Service 3 -->
-          <div class="bg-white rounded-lg p-6 shadow-sm hover:shadow-md transition duration-300 card-hover" data-aos="fade-up" data-aos-delay="200">
-            <div class="w-12 h-12 bg-purple-100 rounded-lg flex items-center justify-center mb-4 hover:rotate-12 transition-transform duration-300">
-              <svg class="w-6 h-6 text-purple-600" fill="currentColor" viewBox="0 0 24 24">
-                <path d="M7 21a4 4 0 01-4-4V5a2 2 0 012-2h4a2 2 0 012 2v12a4 4 0 01-4 4zM7 3H5v10h2V3zM15 21a4 4 0 01-4-4V5a2 2 0 012-2h4a2 2 0 012 2v12a4 4 0 01-4 4z" />
+          <div class="tech-card card-gradient rounded-2xl p-8 hover-lift cursor-pointer group" data-aos="fade-up" data-aos-delay="200">
+            <div class="w-16 h-16 bg-gradient-to-br from-purple-500 to-purple-600 rounded-2xl flex items-center justify-center mb-6 group-hover:scale-110 transition-transform duration-300">
+              <svg class="w-8 h-8 text-white" fill="currentColor" viewBox="0 0 24 24">
+                <path d="M12 2L13.09 8.26L18 7L14.74 12L18 17L13.09 15.74L12 22L10.91 15.74L6 17L9.26 12L6 7L10.91 8.26L12 2Z" />
               </svg>
             </div>
-            <h3 class="text-lg font-semibold mb-2">UI UX Design</h3>
-            <p class="text-gray-600 text-sm">Menciptakan pengalaman pengguna yang intuitif dan menarik dengan desain yang clean dan modern.</p>
+            <h3 class="text-xl font-bold text-secondary mb-4 group-hover:text-white transition-colors duration-300" data-key="service_3_title">E-Commerce Solutions</h3>
+            <p class="text-slate-600 group-hover:text-slate-200 transition-colors duration-300" data-key="service_3_description">Platform e-commerce yang scalable dengan fitur lengkap untuk mengembangkan bisnis online Anda.</p>
           </div>
 
           <!-- Service 4 -->
-          <div class="bg-white rounded-lg p-6 shadow-sm hover:shadow-md transition duration-300 card-hover" data-aos="fade-up" data-aos-delay="300">
-            <div class="w-12 h-12 bg-purple-100 rounded-lg flex items-center justify-center mb-4 hover:rotate-12 transition-transform duration-300">
-              <svg class="w-6 h-6 text-purple-600" fill="currentColor" viewBox="0 0 24 24">
-                <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z" />
+          <div class="tech-card card-gradient rounded-2xl p-8 hover-lift cursor-pointer group" data-aos="fade-up" data-aos-delay="300">
+            <div class="w-16 h-16 bg-gradient-to-br from-red-500 to-red-600 rounded-2xl flex items-center justify-center mb-6 group-hover:scale-110 transition-transform duration-300">
+              <svg class="w-8 h-8 text-white" fill="currentColor" viewBox="0 0 24 24">
+                <path d="M3 6V18C3 19.1 3.89 20 5 20H19C20.11 20 21 19.1 21 18V8L12 13L3 8V6M5 4H19C20.11 4 21 4.89 21 6L12 11L3 6C3 4.89 3.89 4 5 4Z" />
               </svg>
             </div>
-            <h3 class="text-lg font-semibold mb-2">Point of Sales App</h3>
-            <p class="text-gray-600 text-sm">Sistem POS yang komprehensif untuk mengelola penjualan, inventori, dan operasional bisnis dengan efisien.</p>
+            <h3 class="text-xl font-bold text-secondary mb-4 group-hover:text-white transition-colors duration-300" data-key="service_4_title">Digital Consulting</h3>
+            <p class="text-slate-600 group-hover:text-slate-200 transition-colors duration-300" data-key="service_4_description">Konsultasi strategis untuk transformasi digital bisnis Anda dengan pendekatan yang terukur.</p>
           </div>
         </div>
       </div>
     </section>
 
     <!-- About Section -->
-    <section id="about" class="py-20">
-      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+    <section id="about" class="py-24 bg-slate-50">
+      <div class="max-w-7xl mx-auto px-6">
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
           <div data-aos="fade-right">
-            <h2 class="text-3xl md:text-4xl font-bold mb-6">Tentang Kami</h2>
-            <p class="text-gray-600 mb-6">
-              Sebagai perusahaan teknologi yang berdedikasi, kami berkomitmen untuk memberikan solusi digital terbaik. Tim profesional kami terdiri dari developer berpengalaman yang siap membantu mewujudkan visi digital Anda.
+            <span class="text-primary font-semibold text-lg mb-2 block" data-key="about_label">TENTANG BLANKPOINT</span>
+            <h2 class="text-4xl md:text-5xl font-black text-secondary mb-6" data-key="about_title">Inovasi Tanpa Batas untuk Masa Depan Digital</h2>
+            <p class="text-lg text-slate-600 mb-6 leading-relaxed" data-key="about_paragraph_1">
+              Kami adalah tim passionate developer dan designer yang berkomitmen menciptakan solusi teknologi terdepan. Dengan pengalaman lebih dari 5 tahun, kami telah membantu puluhan klien mewujudkan visi digital mereka.
             </p>
-            <p class="text-gray-600 mb-6">Dengan pengalaman bertahun-tahun dalam industri teknologi, kami telah berhasil menyelesaikan berbagai proyek dari skala kecil hingga enterprise. Kepuasan klien adalah prioritas utama kami.</p>
-            <div class="flex space-x-4">
+            <p class="text-lg text-slate-600 mb-8 leading-relaxed" data-key="about_paragraph_2">
+              Setiap project adalah kanvas kosong yang kami isi dengan inovasi, kreativitas, dan teknologi terbaru. Dari startup hingga enterprise, kami siap menjadi partner teknologi terpercaya Anda.
+            </p>
+
+            <!-- Stats -->
+            <div class="grid grid-cols-3 gap-8 mb-8">
               <div class="text-center" data-aos="fade-up" data-aos-delay="100">
-                <div class="text-2xl font-bold text-purple-600 animate-count" data-count="50">0</div>
-                <div class="text-sm text-gray-600">Projects</div>
+                <div class="text-4xl font-black gradient-text counter" data-target="150">0</div>
+                <div class="text-sm font-semibold text-slate-600 uppercase tracking-wide" data-key="stat_projects">Projects Done</div>
               </div>
               <div class="text-center" data-aos="fade-up" data-aos-delay="200">
-                <div class="text-2xl font-bold text-purple-600 animate-count" data-count="100">0</div>
-                <div class="text-sm text-gray-600">Happy Clients</div>
+                <div class="text-4xl font-black gradient-text counter" data-target="98">0</div>
+                <div class="text-sm font-semibold text-slate-600 uppercase tracking-wide" data-key="stat_clients">Happy Clients</div>
               </div>
               <div class="text-center" data-aos="fade-up" data-aos-delay="300">
-                <div class="text-2xl font-bold text-purple-600 animate-count" data-count="5">0</div>
-                <div class="text-sm text-gray-600">Years Experience</div>
+                <div class="text-4xl font-black gradient-text counter" data-target="5">0</div>
+                <div class="text-sm font-semibold text-slate-600 uppercase tracking-wide" data-key="stat_experience">Years Experience</div>
               </div>
             </div>
+
+            <button class="bg-gradient-to-r from-secondary to-primary text-white px-8 py-4 rounded-xl font-bold hover:shadow-xl hover:scale-105 transition-all duration-300" data-key="about_cta">Pelajari Lebih Lanjut</button>
           </div>
-          <div class="flex justify-center" data-aos="fade-left">
-            <div class="relative group">
+
+          <div class="relative" data-aos="fade-left">
+            <div class="relative z-10">
               <img
                 src="https://images.unsplash.com/photo-1522071820081-009f0129c71c?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1000&q=80"
-                alt="Team working"
-                class="rounded-lg shadow-lg w-full max-w-md transform group-hover:scale-105 transition-transform duration-500"
+                alt="Team"
+                class="rounded-3xl shadow-2xl w-full max-w-lg mx-auto hover:scale-105 transition-transform duration-500"
               />
-              <div class="absolute inset-0 bg-purple-600 opacity-0 group-hover:opacity-20 rounded-lg transition-opacity duration-500"></div>
             </div>
+            <div class="absolute -top-6 -right-6 w-32 h-32 bg-gradient-to-br from-primary to-purple-600 rounded-full opacity-20 animate-float"></div>
+            <div class="absolute -bottom-6 -left-6 w-24 h-24 bg-gradient-to-br from-secondary to-primary rounded-full opacity-30 animate-float-delayed"></div>
           </div>
         </div>
       </div>
     </section>
 
-    <!-- Highlight Projects -->
-    <section id="project" class="py-20 bg-gray-50">
-      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div class="text-center mb-12" data-aos="fade-up">
-          <h2 class="text-3xl md:text-4xl font-bold mb-4">Highlight Project</h2>
-          <p class="text-gray-600">Beberapa proyek terbaik yang telah kami kerjakan</p>
+    <!-- Projects Section -->
+    <section id="projects" class="py-24 bg-white">
+      <div class="max-w-7xl mx-auto px-6">
+        <div class="text-center mb-16" data-aos="fade-up">
+          <span class="text-primary font-semibold text-lg mb-2 block" data-key="portfolio_label">PORTFOLIO KAMI</span>
+          <h2 class="text-4xl md:text-5xl font-black text-secondary mb-4" data-key="portfolio_title">Project Unggulan</h2>
+          <p class="text-xl text-slate-600 max-w-3xl mx-auto" data-key="portfolio_description">Setiap project adalah cerita sukses yang kami banggakan. Lihat bagaimana kami mengubah ide menjadi realitas digital.</p>
         </div>
 
-        <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-12">
+        <!-- Featured Projects -->
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 mb-16">
           <!-- Project 1 -->
-          <div class="bg-white rounded-lg overflow-hidden shadow-lg transform transition-all duration-500 hover:scale-[1.02] hover:shadow-xl" data-aos="zoom-in" data-aos-delay="0">
-            <div class="bg-gradient-to-r from-purple-600 to-purple-800 p-6">
-              <div class="bg-white rounded-lg p-4 hover:rotate-1 transition-transform duration-300">
-                <img src="https://images.unsplash.com/photo-1551288049-bebda4e38f71?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" alt="Dashboard" class="w-full h-48 object-cover rounded" />
+          <div class="project-card rounded-3xl overflow-hidden shadow-lg" data-aos="zoom-in" data-aos-delay="100">
+            <div class="relative overflow-hidden bg-gradient-to-br from-blue-500 to-purple-600 p-8">
+              <div class="bg-white rounded-2xl p-6 transform hover:rotate-1 transition-transform duration-300">
+                <img src="https://images.unsplash.com/photo-1551288049-bebda4e38f71?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" alt="Blanksys Dashboard" class="w-full h-48 object-cover rounded-xl" />
               </div>
+              <div class="absolute top-4 right-4 bg-white/20 backdrop-blur-sm rounded-full px-4 py-2 text-white font-semibold text-sm" data-key="featured_badge">Unggulan</div>
             </div>
-            <div class="p-6">
-              <h3 class="text-xl font-bold mb-2">Blanksys</h3>
-              <p class="text-gray-600 mb-4">Dashboard analitik yang powerful untuk monitoring bisnis dengan visualisasi data yang menarik dan insights mendalam.</p>
-              <div class="flex space-x-2">
-                <span class="bg-purple-100 text-purple-600 px-3 py-1 rounded-full text-sm hover:bg-purple-200 transition-colors duration-300">React</span>
-                <span class="bg-purple-100 text-purple-600 px-3 py-1 rounded-full text-sm hover:bg-purple-200 transition-colors duration-300">Node.js</span>
+            <div class="p-8">
+              <h3 class="text-2xl font-bold text-secondary mb-3" data-key="project_1_title">Blanksys Analytics</h3>
+              <p class="text-slate-600 mb-6 leading-relaxed" data-key="project_1_description">
+                Platform analitik bisnis yang komprehensif dengan real-time dashboard, advanced reporting, dan AI-powered insights untuk pengambilan keputusan yang lebih baik.
+              </p>
+              <div class="flex flex-wrap gap-2 mb-6">
+                <span class="bg-blue-100 text-blue-700 px-3 py-1 rounded-full text-sm font-medium">React.js</span>
+                <span class="bg-green-100 text-green-700 px-3 py-1 rounded-full text-sm font-medium">Node.js</span>
+                <span class="bg-purple-100 text-purple-700 px-3 py-1 rounded-full text-sm font-medium">MongoDB</span>
               </div>
+              <button class="text-primary font-semibold hover:text-purple-600 transition-colors duration-300 flex items-center" data-key="view_project">
+                Lihat Project
+                <svg class="w-4 h-4 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"></path>
+                </svg>
+              </button>
             </div>
           </div>
 
           <!-- Project 2 -->
-          <div class="bg-white rounded-lg overflow-hidden shadow-lg transform transition-all duration-500 hover:scale-[1.02] hover:shadow-xl" data-aos="zoom-in" data-aos-delay="100">
-            <div class="bg-gradient-to-r from-green-500 to-green-600 p-6">
-              <div class="bg-white rounded-lg p-4 hover:-rotate-1 transition-transform duration-300">
-                <img src="https://images.unsplash.com/photo-1563013544-824ae1b704d3?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" alt="Mobile App" class="w-full h-48 object-cover rounded" />
+          <div class="project-card rounded-3xl overflow-hidden shadow-lg" data-aos="zoom-in" data-aos-delay="200">
+            <div class="relative overflow-hidden bg-gradient-to-br from-green-500 to-emerald-600 p-8">
+              <div class="bg-white rounded-2xl p-6 transform hover:-rotate-1 transition-transform duration-300">
+                <img src="https://images.unsplash.com/photo-1563013544-824ae1b704d3?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" alt="Berkah Mobile" class="w-full h-48 object-cover rounded-xl" />
               </div>
+              <div class="absolute top-4 right-4 bg-white/20 backdrop-blur-sm rounded-full px-4 py-2 text-white font-semibold text-sm" data-key="mobile_badge">Mobile App</div>
             </div>
-            <div class="p-6">
-              <h3 class="text-xl font-bold mb-2">Berkah Mobile Service</h3>
-              <p class="text-gray-600 mb-4">Aplikasi mobile untuk layanan servis berkeliling dengan fitur booking, tracking, dan payment terintegrasi.</p>
-              <div class="flex space-x-2">
-                <span class="bg-green-100 text-green-600 px-3 py-1 rounded-full text-sm hover:bg-green-200 transition-colors duration-300">Flutter</span>
-                <span class="bg-green-100 text-green-600 px-3 py-1 rounded-full text-sm hover:bg-green-200 transition-colors duration-300">Firebase</span>
+            <div class="p-8">
+              <h3 class="text-2xl font-bold text-secondary mb-3" data-key="project_2_title">Berkah Mobile Service</h3>
+              <p class="text-slate-600 mb-6 leading-relaxed" data-key="project_2_description">
+                Aplikasi mobile on-demand service yang menghubungkan pengguna dengan teknisi profesional. Fitur real-time tracking, payment gateway, dan rating system.
+              </p>
+              <div class="flex flex-wrap gap-2 mb-6">
+                <span class="bg-cyan-100 text-cyan-700 px-3 py-1 rounded-full text-sm font-medium">Flutter</span>
+                <span class="bg-orange-100 text-orange-700 px-3 py-1 rounded-full text-sm font-medium">Firebase</span>
+                <span class="bg-indigo-100 text-indigo-700 px-3 py-1 rounded-full text-sm font-medium">Google Maps</span>
               </div>
+              <button class="text-primary font-semibold hover:text-purple-600 transition-colors duration-300 flex items-center" data-key="view_project">
+                Lihat Project
+                <svg class="w-4 h-4 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"></path>
+                </svg>
+              </button>
             </div>
           </div>
         </div>
 
-        <!-- Other Projects -->
-        <div class="mb-12">
-          <h3 class="text-2xl font-bold mb-8 text-center" data-aos="fade-up">Another Project</h3>
-          <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-            <!-- Project 3 -->
-            <div class="bg-white rounded-lg overflow-hidden shadow-lg hover:shadow-xl transition-shadow duration-300" data-aos="fade-up" data-aos-delay="0">
-              <div class="overflow-hidden">
-                <img src="https://images.unsplash.com/photo-1551434678-e076c223a692?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80" alt="DevOverflow" class="w-full h-32 object-cover hover:scale-110 transition-transform duration-500" />
-              </div>
-              <div class="p-4">
-                <h4 class="font-semibold mb-2">DevOverflow</h4>
-                <p class="text-sm text-gray-600 mb-3">Platform tanya jawab untuk developer dengan sistem voting dan reputation.</p>
-                <div class="flex space-x-1">
-                  <span class="bg-blue-100 text-blue-600 px-2 py-1 rounded text-xs hover:bg-blue-200 transition-colors duration-300">Next.js</span>
-                  <span class="bg-blue-100 text-blue-600 px-2 py-1 rounded text-xs hover:bg-blue-200 transition-colors duration-300">MongoDB</span>
-                </div>
+        <!-- More Projects -->
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mb-12">
+          <!-- Small Project 1 -->
+          <div class="bg-white rounded-2xl shadow-lg overflow-hidden hover-lift" data-aos="fade-up" data-aos-delay="100">
+            <div class="h-48 bg-gradient-to-br from-pink-400 to-red-500 p-6 flex items-center justify-center">
+              <div class="w-20 h-20 bg-white rounded-2xl flex items-center justify-center">
+                <svg class="w-10 h-10 text-pink-500" fill="currentColor" viewBox="0 0 24 24">
+                  <path d="M12 2L13.09 8.26L18 7L14.74 12L18 17L13.09 15.74L12 22L10.91 15.74L6 17L9.26 12L6 7L10.91 8.26L12 2Z" />
+                </svg>
               </div>
             </div>
-
-            <!-- Project 4 -->
-            <div class="bg-white rounded-lg overflow-hidden shadow-lg hover:shadow-xl transition-shadow duration-300" data-aos="fade-up" data-aos-delay="100">
-              <div class="overflow-hidden">
-                <img src="https://images.unsplash.com/photo-1560472354-b33ff0c44a43?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80" alt="Architecture" class="w-full h-32 object-cover hover:scale-110 transition-transform duration-500" />
-              </div>
-              <div class="p-4">
-                <h4 class="font-semibold mb-2">Citraprasada.com</h4>
-                <p class="text-sm text-gray-600 mb-3">Website portofolio untuk perusahaan arsitektur dengan galeri project yang elegan.</p>
-                <div class="flex space-x-1">
-                  <span class="bg-orange-100 text-orange-600 px-2 py-1 rounded text-xs hover:bg-orange-200 transition-colors duration-300">WordPress</span>
-                  <span class="bg-orange-100 text-orange-600 px-2 py-1 rounded text-xs hover:bg-orange-200 transition-colors duration-300">PHP</span>
-                </div>
+            <div class="p-6">
+              <h4 class="text-lg font-bold text-secondary mb-2" data-key="project_3_title">DevOverflow</h4>
+              <p class="text-slate-600 text-sm mb-4" data-key="project_3_description">Platform Q&A untuk developer dengan AI-powered solutions</p>
+              <div class="flex gap-2">
+                <span class="bg-slate-100 text-slate-700 px-2 py-1 rounded text-xs">Next.js</span>
+                <span class="bg-slate-100 text-slate-700 px-2 py-1 rounded text-xs">AI</span>
               </div>
             </div>
+          </div>
 
-            <!-- Project 5 -->
-            <div class="bg-white rounded-lg overflow-hidden shadow-lg hover:shadow-xl transition-shadow duration-300" data-aos="fade-up" data-aos-delay="200">
-              <div class="overflow-hidden">
-                <img src="https://images.unsplash.com/photo-1460925895917-afdab827c52f?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80" alt="Codeshot" class="w-full h-32 object-cover hover:scale-110 transition-transform duration-500" />
-              </div>
-              <div class="p-4">
-                <h4 class="font-semibold mb-2">Codeshot</h4>
-                <p class="text-sm text-gray-600 mb-3">Platform untuk berbagi dan showcase code snippet dengan syntax highlighting.</p>
-                <div class="flex space-x-1">
-                  <span class="bg-green-100 text-green-600 px-2 py-1 rounded text-xs hover:bg-green-200 transition-colors duration-300">Vue.js</span>
-                  <span class="bg-green-100 text-green-600 px-2 py-1 rounded text-xs hover:bg-green-200 transition-colors duration-300">Express</span>
-                </div>
+          <!-- Small Project 2 -->
+          <div class="bg-white rounded-2xl shadow-lg overflow-hidden hover-lift" data-aos="fade-up" data-aos-delay="200">
+            <div class="h-48 bg-gradient-to-br from-yellow-400 to-orange-500 p-6 flex items-center justify-center">
+              <div class="w-20 h-20 bg-white rounded-2xl flex items-center justify-center">
+                <svg class="w-10 h-10 text-yellow-500" fill="currentColor" viewBox="0 0 24 24">
+                  <path
+                    d="M12 2C6.48 2 2 6.48 2 12S6.48 22 12 22 22 17.52 22 12 17.52 2 12 2M12 20C7.59 20 4 16.41 4 12S7.59 4 12 4 20 7.59 20 12 16.41 20 12 20M12 6C8.69 6 6 8.69 6 12S8.69 18 12 18 16 15.31 16 12 15.31 6 12 6M12 16C9.79 16 8 14.21 8 12S9.79 8 12 8 16 9.79 16 12 14.21 16 12 16Z"
+                  />
+                </svg>
               </div>
             </div>
-
-            <!-- Project 6 -->
-            <div class="bg-white rounded-lg overflow-hidden shadow-lg hover:shadow-xl transition-shadow duration-300" data-aos="fade-up" data-aos-delay="300">
-              <div class="overflow-hidden">
-                <img src="https://images.unsplash.com/photo-1556742049-0cfed4f6a45d?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80" alt="Pinkine" class="w-full h-32 object-cover hover:scale-110 transition-transform duration-500" />
+            <div class="p-6">
+              <h4 class="text-lg font-bold text-secondary mb-2" data-key="project_4_title">Citraprasada</h4>
+              <p class="text-slate-600 text-sm mb-4" data-key="project_4_description">Website arsitektur dengan galeri interaktif dan virtual tour</p>
+              <div class="flex gap-2">
+                <span class="bg-slate-100 text-slate-700 px-2 py-1 rounded text-xs">WordPress</span>
+                <span class="bg-slate-100 text-slate-700 px-2 py-1 rounded text-xs">3D</span>
               </div>
-              <div class="p-4">
-                <h4 class="font-semibold mb-2">Pinkine</h4>
-                <p class="text-sm text-gray-600 mb-3">E-commerce platform dengan design modern dan fitur pembayaran terintegrasi.</p>
-                <div class="flex space-x-1">
-                  <span class="bg-pink-100 text-pink-600 px-2 py-1 rounded text-xs hover:bg-pink-200 transition-colors duration-300">React</span>
-                  <span class="bg-pink-100 text-pink-600 px-2 py-1 rounded text-xs hover:bg-pink-200 transition-colors duration-300">Stripe</span>
-                </div>
+            </div>
+          </div>
+
+          <!-- Small Project 3 -->
+          <div class="bg-white rounded-2xl shadow-lg overflow-hidden hover-lift" data-aos="fade-up" data-aos-delay="300">
+            <div class="h-48 bg-gradient-to-br from-indigo-400 to-blue-500 p-6 flex items-center justify-center">
+              <div class="w-20 h-20 bg-white rounded-2xl flex items-center justify-center">
+                <svg class="w-10 h-10 text-indigo-500" fill="currentColor" viewBox="0 0 24 24">
+                  <path d="M9.4 16.6L4.8 12L3.4 13.4L9.4 19.4L20.6 8.2L19.2 6.8L9.4 16.6Z" />
+                </svg>
+              </div>
+            </div>
+            <div class="p-6">
+              <h4 class="text-lg font-bold text-secondary mb-2" data-key="project_5_title">Pinkine Store</h4>
+              <p class="text-slate-600 text-sm mb-4" data-key="project_5_description">E-commerce modern dengan checkout yang seamless</p>
+              <div class="flex gap-2">
+                <span class="bg-slate-100 text-slate-700 px-2 py-1 rounded text-xs">React</span>
+                <span class="bg-slate-100 text-slate-700 px-2 py-1 rounded text-xs">Stripe</span>
               </div>
             </div>
           </div>
         </div>
 
         <div class="text-center" data-aos="fade-up">
-          <button class="bg-purple-600 text-white px-8 py-3 rounded-lg font-semibold hover:bg-purple-700 transition duration-300 btn-hover">Load More</button>
+          <button class="bg-gradient-to-r from-secondary to-primary text-white px-8 py-4 rounded-xl font-bold hover:shadow-xl hover:scale-105 transition-all duration-300" data-key="view_all_projects">Lihat Semua Project</button>
         </div>
       </div>
     </section>
 
     <!-- Contact Section -->
-    <section class="py-20">
-      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
-          <div data-aos="fade-right">
-            <h2 class="text-3xl md:text-4xl font-bold mb-6">Contact Us</h2>
-            <p class="text-gray-600 mb-8">Siap membantu mewujudkan impian untuk berkarya dalam dunia teknologi. Hubungi kami untuk konsultasi gratis dan dapatkan solusi terbaik untuk bisnis Anda.</p>
+    <section id="contact" class="py-24 hero-gradient relative overflow-hidden">
+      <div class="absolute inset-0">
+        <div class="absolute top-10 right-10 w-64 h-64 bg-purple-600 rounded-full opacity-10 animate-float"></div>
+        <div class="absolute bottom-10 left-10 w-80 h-80 bg-purple-500 rounded-full opacity-5 animate-float-delayed"></div>
+      </div>
 
-            <div class="space-y-4">
-              <div class="flex items-center group">
-                <div class="w-10 h-10 bg-purple-100 rounded-lg flex items-center justify-center mr-4 group-hover:bg-purple-200 transition-colors duration-300">
-                  <svg class="w-5 h-5 text-purple-600 group-hover:scale-110 transition-transform duration-300" fill="currentColor" viewBox="0 0 24 24">
-                    <path
-                      d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"
-                    />
-                  </svg>
-                </div>
-                <div>
-                  <h4 class="font-semibold">WhatsApp us</h4>
-                  <p class="text-gray-600">+62 812-3456-7890</p>
-                </div>
+      <div class="max-w-7xl mx-auto px-6 relative z-10">
+        <div class="text-center mb-16" data-aos="fade-up">
+          <span class="text-primary font-semibold text-lg mb-2 block" data-key="contact_label">HUBUNGI KAMI</span>
+          <h2 class="text-4xl md:text-5xl font-black text-white mb-4" data-key="contact_title">Mari Terhubung</h2>
+          <p class="text-xl text-slate-300 max-w-3xl mx-auto" data-key="contact_description">Mari terhubung dan diskusikan ide-ide kreatif Anda bersama kami</p>
+        </div>
+
+        <div class="max-w-2xl mx-auto">
+          <div class="space-y-8 text-center">
+            <!-- WhatsApp -->
+            <a href="https://wa.me/6282254500939" class="flex items-center justify-center space-x-4 p-6 bg-white/10 rounded-xl hover:bg-white/20 transition-all duration-300 group">
+              <div class="w-12 h-12 bg-green-500 rounded-full flex items-center justify-center group-hover:scale-110 transition-transform duration-300">
+                <svg class="w-6 h-6 text-white" fill="currentColor" viewBox="0 0 24 24">
+                  <path
+                    d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.890-5.335 11.893-11.893A11.821 11.821 0 0020.885 3.488"
+                  />
+                </svg>
               </div>
+              <span class="text-white text-lg font-semibold" data-key="whatsapp_text">WhatsApp: +62 822-5450-0939</span>
+            </a>
 
-              <div class="flex items-center group">
-                <div class="w-10 h-10 bg-purple-100 rounded-lg flex items-center justify-center mr-4 group-hover:bg-purple-200 transition-colors duration-300">
-                  <svg class="w-5 h-5 text-purple-600 group-hover:scale-110 transition-transform duration-300" fill="currentColor" viewBox="0 0 24 24">
-                    <path d="M2.003 5.884L10 9.882l7.997-3.998A2 2 0 0016 4H4a2 2 0 00-1.997 1.884z" />
-                    <path d="M18 8.118l-8 4-8-4V14a2 2 0 002 2h12a2 2 0 002-2V8.118z" />
-                  </svg>
-                </div>
-                <div>
-                  <h4 class="font-semibold">Email us</h4>
-                  <p class="text-gray-600">hello@blankpoint.com</p>
-                </div>
+            <!-- Email -->
+            <a href="mailto:ferdausalamsyah@gmail.com" class="flex items-center justify-center space-x-4 p-6 bg-white/10 rounded-xl hover:bg-white/20 transition-all duration-300 group">
+              <div class="w-12 h-12 bg-red-500 rounded-full flex items-center justify-center group-hover:scale-110 transition-transform duration-300">
+                <svg class="w-6 h-6 text-white" fill="currentColor" viewBox="0 0 24 24">
+                  <path d="M20 4H4C2.9 4 2.01 4.9 2.01 6L2 18C2 19.1 2.9 20 4 20H20C21.1 20 22 19.1 22 18V6C22 4.9 21.1 4 20 4ZM20 8L12 13L4 8V6L12 11L20 6V8Z" />
+                </svg>
               </div>
-            </div>
-          </div>
+              <span class="text-white text-lg font-semibold" data-key="email_text">Email: ferdausalamsyah@gmail.com</span>
+            </a>
 
-          <div class="flex justify-center" data-aos="fade-left">
-            <div class="bg-white rounded-lg shadow-lg p-8 w-full max-w-md hover-scale">
-              <h3 class="text-xl font-bold mb-6">Get in Touch</h3>
-              <form class="space-y-4">
-                <div>
-                  <label class="block text-sm font-medium text-gray-700 mb-1">Full Name</label>
-                  <input type="text" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-600 focus:border-transparent transition-all duration-300" />
-                </div>
-                <div>
-                  <label class="block text-sm font-medium text-gray-700 mb-1">Email</label>
-                  <input type="email" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-600 focus:border-transparent transition-all duration-300" />
-                </div>
-                <div>
-                  <label class="block text-sm font-medium text-gray-700 mb-1">Subject</label>
-                  <input type="text" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-600 focus:border-transparent transition-all duration-300" />
-                </div>
-                <div>
-                  <label class="block text-sm font-medium text-gray-700 mb-1">Message</label>
-                  <textarea rows="4" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-600 focus:border-transparent transition-all duration-300"></textarea>
-                </div>
-                <button type="submit" class="w-full bg-purple-600 text-white py-2 px-4 rounded-lg font-semibold hover:bg-purple-700 transition duration-300 btn-hover">Send Message</button>
-              </form>
+            <!-- Social Media -->
+            <div class="flex justify-center space-x-6 pt-8">
+              <a href="#" class="w-12 h-12 bg-white/10 rounded-full flex items-center justify-center text-white hover:bg-primary hover:scale-110 transition-all duration-300">
+                <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
+                  <path
+                    d="M24 4.557c-.883.392-1.832.656-2.828.775 1.017-.609 1.798-1.574 2.165-2.724-.951.564-2.005.974-3.127 1.195-.897-.957-2.178-1.555-3.594-1.555-3.179 0-5.515 2.966-4.797 6.045-4.091-.205-7.719-2.165-10.148-5.144-1.29 2.213-.669 5.108 1.523 6.574-.806-.026-1.566-.247-2.229-.616-.054 2.281 1.581 4.415 3.949 4.89-.693.188-1.452.232-2.224.084.626 1.956 2.444 3.379 4.6 3.419-2.07 1.623-4.678 2.348-7.29 2.04 2.179 1.397 4.768 2.212 7.548 2.212 9.142 0 14.307-7.721 13.995-14.646.962-.695 1.797-1.562 2.457-2.549z"
+                  />
+                </svg>
+              </a>
+              <a href="#" class="w-12 h-12 bg-white/10 rounded-full flex items-center justify-center text-white hover:bg-primary hover:scale-110 transition-all duration-300">
+                <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
+                  <path
+                    d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4z"
+                  />
+                </svg>
+              </a>
+              <a href="#" class="w-12 h-12 bg-white/10 rounded-full flex items-center justify-center text-white hover:bg-primary hover:scale-110 transition-all duration-300">
+                <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
+                  <path
+                    d="M19.615 3.184c-3.604-.246-11.631-.245-15.23 0-3.897.266-4.356 2.62-4.385 8.816.029 6.185.484 8.549 4.385 8.816 3.6.245 11.626.246 15.23 0 3.897-.266 4.356-2.62 4.385-8.816-.029-6.185-.484-8.549-4.385-8.816zm-10.615 12.816v-8l8 3.993-8 4.007z"
+                  />
+                </svg>
+              </a>
             </div>
           </div>
         </div>
@@ -439,169 +651,600 @@
     </section>
 
     <!-- Footer -->
-    <footer class="bg-purple-600 text-white py-12">
-      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
-          <div data-aos="fade-up">
-            <div class="flex items-center mb-4">
-              <div class="bg-white p-2 rounded-lg mr-3 hover:rotate-12 transition-transform duration-300">
-                <svg class="w-6 h-6 text-purple-600" fill="currentColor" viewBox="0 0 24 24">
-                  <path d="M12 2L2 7v10c0 5.55 3.84 9.74 9 11 5.16-1.26 9-5.45 9-11V7l-10-5z" />
+    <footer class="bg-secondary py-16">
+      <div class="max-w-7xl mx-auto px-6">
+        <div class="grid grid-cols-1 md:grid-cols-4 gap-12">
+          <!-- Brand -->
+          <div class="col-span-1 md:col-span-2" data-aos="fade-up">
+            <div class="flex items-center space-x-3 mb-6">
+              <div class="w-12 h-12 bg-gradient-to-br from-primary to-purple-600 rounded-2xl flex items-center justify-center">
+                <svg class="w-6 h-6 text-white" fill="currentColor" viewBox="0 0 24 24">
+                  <path d="M12 2L13.09 8.26L18 7L14.74 12L18 17L13.09 15.74L12 22L10.91 15.74L6 17L9.26 12L6 7L10.91 8.26L12 2Z" />
                 </svg>
               </div>
-              <span class="text-xl font-bold">BLANKPOINT</span>
+              <span class="text-2xl font-black text-white">BLANKPOINT</span>
             </div>
-            <p class="text-purple-200 mb-4">Menciptakan solusi digital inovatif untuk masa depan yang lebih baik.</p>
+            <p class="text-slate-400 text-lg mb-6 leading-relaxed max-w-md" data-key="footer_description">
+              Menciptakan solusi digital yang mengubah cara dunia bekerja. Dari konsep hingga implementasi, kami adalah partner teknologi yang Anda butuhkan.
+            </p>
+            <div class="flex space-x-6">
+              <div class="text-center">
+                <div class="text-3xl font-black text-primary">150+</div>
+                <div class="text-slate-400 text-sm" data-key="footer_stat_projects">Projects</div>
+              </div>
+              <div class="text-center">
+                <div class="text-3xl font-black text-primary">98%</div>
+                <div class="text-slate-400 text-sm" data-key="footer_stat_satisfaction">Satisfaction</div>
+              </div>
+              <div class="text-center">
+                <div class="text-3xl font-black text-primary">5+</div>
+                <div class="text-slate-400 text-sm" data-key="footer_stat_years">Years</div>
+              </div>
+            </div>
           </div>
 
+          <!-- Services -->
           <div data-aos="fade-up" data-aos-delay="100">
-            <h4 class="font-semibold mb-4">Company</h4>
-            <ul class="space-y-2 text-purple-200">
-              <li><a href="#" class="hover:text-white transition-colors duration-300">About</a></li>
-              <li><a href="#" class="hover:text-white transition-colors duration-300">Services</a></li>
-              <li><a href="#" class="hover:text-white transition-colors duration-300">Portfolio</a></li>
-              <li><a href="#" class="hover:text-white transition-colors duration-300">Contact</a></li>
+            <h4 class="text-lg font-bold text-white mb-6" data-key="footer_services_title">Layanan</h4>
+            <ul class="space-y-3 text-slate-400">
+              <li><a href="#" class="hover:text-primary transition-colors duration-300" data-key="footer_service_1">Web Development</a></li>
+              <li><a href="#" class="hover:text-primary transition-colors duration-300" data-key="footer_service_2">Mobile Apps</a></li>
+              <li><a href="#" class="hover:text-primary transition-colors duration-300" data-key="footer_service_3">UI/UX Design</a></li>
+              <li><a href="#" class="hover:text-primary transition-colors duration-300" data-key="footer_service_4">E-Commerce</a></li>
+              <li><a href="#" class="hover:text-primary transition-colors duration-300" data-key="footer_service_5">Digital Consulting</a></li>
             </ul>
           </div>
 
+          <!-- Company -->
           <div data-aos="fade-up" data-aos-delay="200">
-            <h4 class="font-semibold mb-4">Services</h4>
-            <ul class="space-y-2 text-purple-200">
-              <li><a href="#" class="hover:text-white transition-colors duration-300">Web Development</a></li>
-              <li><a href="#" class="hover:text-white transition-colors duration-300">Mobile App</a></li>
-              <li><a href="#" class="hover:text-white transition-colors duration-300">UI/UX Design</a></li>
-              <li><a href="#" class="hover:text-white transition-colors duration-300">Consulting</a></li>
+            <h4 class="text-lg font-bold text-white mb-6" data-key="footer_company_title">Perusahaan</h4>
+            <ul class="space-y-3 text-slate-400">
+              <li><a href="#" class="hover:text-primary transition-colors duration-300" data-key="footer_company_1">Tentang Kami</a></li>
+              <li><a href="#" class="hover:text-primary transition-colors duration-300" data-key="footer_company_2">Tim Kami</a></li>
+              <li><a href="#" class="hover:text-primary transition-colors duration-300" data-key="footer_company_3">Portfolio</a></li>
+              <li><a href="#" class="hover:text-primary transition-colors duration-300" data-key="footer_company_4">Studi Kasus</a></li>
+              <li><a href="#" class="hover:text-primary transition-colors duration-300" data-key="footer_company_5">Kontak</a></li>
             </ul>
-          </div>
-
-          <div data-aos="fade-up" data-aos-delay="300">
-            <h4 class="font-semibold mb-4">Follow Us</h4>
-            <div class="flex space-x-4">
-              <a href="#" class="text-purple-200 hover:text-white transition-colors duration-300 hover:scale-110">
-                <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24">
-                  <path
-                    d="M24 4.557c-.883.392-1.832.656-2.828.775 1.017-.609 1.798-1.574 2.165-2.724-.951.564-2.005.974-3.127 1.195-.897-.957-2.178-1.555-3.594-1.555-3.179 0-5.515 2.966-4.797 6.045-4.091-.205-7.719-2.165-10.148-5.144-1.29 2.213-.669 5.108 1.523 6.574-.806-.026-1.566-.247-2.229-.616-.054 2.281 1.581 4.415 3.949 4.89-.693.188-1.452.232-2.224.084.626 1.956 2.444 3.379 4.6 3.419-2.07 1.623-4.678 2.348-7.29 2.04 2.179 1.397 4.768 2.212 7.548 2.212 9.142 0 14.307-7.721 13.995-14.646.962-.695 1.797-1.562 2.457-2.549z"
-                  />
-                </svg>
-              </a>
-              <a href="#" class="text-purple-200 hover:text-white transition-colors duration-300 hover:scale-110">
-                <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24">
-                  <path
-                    d="M22.46 6c-.77.35-1.6.58-2.46.69.88-.53 1.56-1.37 1.88-2.38-.83.5-1.75.85-2.72 1.05C18.37 4.5 17.26 4 16 4c-2.35 0-4.27 1.92-4.27 4.29 0 .34.04.67.11.98C8.28 9.09 5.11 7.38 3 4.79c-.37.63-.58 1.37-.58 2.15 0 1.49.75 2.81 1.91 3.56-.71 0-1.37-.2-1.95-.5v.03c0 2.08 1.48 3.82 3.44 4.21a4.22 4.22 0 01-1.93.07 4.28 4.28 0 00 4 2.98 8.521 8.521 0 01-5.33 1.84c-.34 0-.68-.02-1.02-.06C3.44 20.29 5.7 21 8.12 21 16 21 20.33 14.46 20.33 8.79c0-.19 0-.37-.01-.56.84-.6 1.56-1.36 2.14-2.23z"
-                  />
-                </svg>
-              </a>
-              <a href="#" class="text-purple-200 hover:text-white transition-colors duration-300 hover:scale-110">
-                <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24">
-                  <path
-                    d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"
-                  />
-                </svg>
-              </a>
-              <a href="#" class="text-purple-200 hover:text-white transition-colors duration-300 hover:scale-110">
-                <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24">
-                  <path
-                    d="M12.017 0C5.396 0 .029 5.367.029 11.987c0 5.079 3.158 9.417 7.618 11.174-.105-.949-.199-2.403.041-3.439.219-.937 1.406-5.957 1.406-5.957s-.359-.72-.359-1.781c0-1.663.967-2.911 2.168-2.911 1.024 0 1.518.769 1.518 1.688 0 1.029-.653 2.567-.992 3.992-.285 1.193.6 2.165 1.775 2.165 2.128 0 3.768-2.245 3.768-5.487 0-2.861-2.063-4.869-5.008-4.869-3.41 0-5.409 2.562-5.409 5.199 0 1.033.394 2.143.889 2.741.099.12.112.225.083.344-.09.375-.293 1.199-.334 1.363-.053.225-.172.271-.402.165-1.495-.69-2.433-2.878-2.433-4.646 0-3.776 2.748-7.252 7.92-7.252 4.158 0 7.392 2.967 7.392 6.923 0 4.135-2.607 7.462-6.233 7.462-1.214 0-2.357-.629-2.764-1.378l-.748 2.853c-.271 1.043-1.002 2.35-1.492 3.146C9.57 23.812 10.763 24.009 12.017 24.009c6.624 0 11.99-5.367 11.99-11.988C24.007 5.367 18.641.001 12.017.001z"
-                  />
-                </svg>
-              </a>
-            </div>
           </div>
         </div>
 
-        <div class="border-t border-purple-500 mt-8 pt-8 text-center text-purple-200" data-aos="fade-up">
-          <p>&copy; 2025 Blankpoint. All rights reserved.</p>
+        <div class="border-t border-primary/30 mt-16 pt-8" data-aos="fade-up">
+          <div class="flex flex-col md:flex-row justify-between items-center">
+            <p class="text-slate-400 mb-4 md:mb-0" data-key="footer_copyright">&copy; 2025 Blankpoint. Crafted with ❤️ in Indonesia.</p>
+            <div class="flex space-x-6 text-slate-400">
+              <a href="#" class="hover:text-primary transition-colors duration-300" data-key="footer_privacy">Privacy Policy</a>
+              <a href="#" class="hover:text-primary transition-colors duration-300" data-key="footer_terms">Terms of Service</a>
+              <a href="#" class="hover:text-primary transition-colors duration-300" data-key="footer_cookies">Cookies</a>
+            </div>
+          </div>
         </div>
       </div>
     </footer>
 
+    <!-- Scripts -->
     <script>
-      // Initialize AOS animation library
+      // Translation data
+      const translations = {
+        id: {
+          // Navigation
+          nav_home: "Beranda",
+          nav_about: "Tentang",
+          nav_projects: "Project",
+          nav_contact: "Kontak",
+          cta_button: "Mari Terhubung",
+          language_label: "Bahasa",
+
+          // Hero Section
+          hero_badge: "🚀 Solusi Digital Modern",
+          hero_title_1: "Ciptakan",
+          hero_title_2: "Pengalaman",
+          hero_title_3: "Luar Biasa",
+          hero_description: "Kami membangun solusi digital yang mengubah ide Anda menjadi kenyataan dengan teknologi terdepan dan desain yang memukau.",
+          hero_cta_primary: "Mulai Project",
+          hero_cta_secondary: "Lihat Portfolio",
+          hero_card_title: "Inovasi",
+          hero_card_subtitle: "Driven Development",
+
+          // Services Section
+          services_label: "KEAHLIAN KAMI",
+          services_title: "Apa yang Kami Ciptakan",
+          services_description: "Dari konsep hingga implementasi, kami menghadirkan solusi teknologi yang mengubah cara Anda berbisnis.",
+          service_1_title: "Software Development",
+          service_1_description: "Aplikasi web dan mobile yang powerful dengan performa optimal dan user experience yang luar biasa.",
+          service_2_title: "UI/UX Design",
+          service_2_description: "Desain interface yang intuitif dan engaging dengan fokus pada pengalaman pengguna yang sempurna.",
+          service_3_title: "E-Commerce Solutions",
+          service_3_description: "Platform e-commerce yang scalable dengan fitur lengkap untuk mengembangkan bisnis online Anda.",
+          service_4_title: "Digital Consulting",
+          service_4_description: "Konsultasi strategis untuk transformasi digital bisnis Anda dengan pendekatan yang terukur.",
+
+          // About Section
+          about_label: "TENTANG BLANKPOINT",
+          about_title: "Inovasi Tanpa Batas untuk Masa Depan Digital",
+          about_paragraph_1:
+            "Kami adalah tim passionate developer dan designer yang berkomitmen menciptakan solusi teknologi terdepan. Dengan pengalaman lebih dari 5 tahun, kami telah membantu puluhan klien mewujudkan visi digital mereka.",
+          about_paragraph_2: "Setiap project adalah kanvas kosong yang kami isi dengan inovasi, kreativitas, dan teknologi terbaru. Dari startup hingga enterprise, kami siap menjadi partner teknologi terpercaya Anda.",
+          about_cta: "Pelajari Lebih Lanjut",
+          stat_projects: "Projects Done",
+          stat_clients: "Happy Clients",
+          stat_experience: "Years Experience",
+
+          // Portfolio Section
+          portfolio_label: "PORTFOLIO KAMI",
+          portfolio_title: "Project Unggulan",
+          portfolio_description: "Setiap project adalah cerita sukses yang kami banggakan. Lihat bagaimana kami mengubah ide menjadi realitas digital.",
+          featured_badge: "Unggulan",
+          mobile_badge: "Mobile App",
+          project_1_title: "Blanksys Analytics",
+          project_1_description: "Platform analitik bisnis yang komprehensif dengan real-time dashboard, advanced reporting, dan AI-powered insights untuk pengambilan keputusan yang lebih baik.",
+          project_2_title: "Berkah Mobile Service",
+          project_2_description: "Aplikasi mobile on-demand service yang menghubungkan pengguna dengan teknisi profesional. Fitur real-time tracking, payment gateway, dan rating system.",
+          project_3_title: "DevOverflow",
+          project_3_description: "Platform Q&A untuk developer dengan AI-powered solutions",
+          project_4_title: "Citraprasada",
+          project_4_description: "Website arsitektur dengan galeri interaktif dan virtual tour",
+          project_5_title: "Pinkine Store",
+          project_5_description: "E-commerce modern dengan checkout yang seamless",
+          view_project: "Lihat Project",
+          view_all_projects: "Lihat Semua Project",
+
+          // Contact Section
+          contact_label: "HUBUNGI KAMI",
+          contact_title: "Mari Terhubung",
+          contact_description: "Mari terhubung dan diskusikan ide-ide kreatif Anda bersama kami",
+          whatsapp_text: "WhatsApp: +62 822-5450-0939",
+          email_text: "Email: ferdausalamsyah@gmail.com",
+
+          // Footer
+          footer_description: "Menciptakan solusi digital yang mengubah cara dunia bekerja. Dari konsep hingga implementasi, kami adalah partner teknologi yang Anda butuhkan.",
+          footer_stat_projects: "Projects",
+          footer_stat_satisfaction: "Satisfaction",
+          footer_stat_years: "Years",
+          footer_services_title: "Layanan",
+          footer_service_1: "Web Development",
+          footer_service_2: "Mobile Apps",
+          footer_service_3: "UI/UX Design",
+          footer_service_4: "E-Commerce",
+          footer_service_5: "Digital Consulting",
+          footer_company_title: "Perusahaan",
+          footer_company_1: "Tentang Kami",
+          footer_company_2: "Tim Kami",
+          footer_company_3: "Portfolio",
+          footer_company_4: "Studi Kasus",
+          footer_company_5: "Kontak",
+          footer_copyright: "&copy; 2025 Blankpoint. Crafted with ❤️ in Indonesia.",
+          footer_privacy: "Privacy Policy",
+          footer_terms: "Terms of Service",
+          footer_cookies: "Cookies",
+        },
+        en: {
+          // Navigation
+          nav_home: "Home",
+          nav_about: "About",
+          nav_projects: "Projects",
+          nav_contact: "Contact",
+          cta_button: "Get Connected",
+          language_label: "Language",
+
+          // Hero Section
+          hero_badge: "🚀 Modern Digital Solutions",
+          hero_title_1: "Create",
+          hero_title_2: "Amazing",
+          hero_title_3: "Experiences",
+          hero_description: "We build digital solutions that turn your ideas into reality with cutting-edge technology and stunning design.",
+          hero_cta_primary: "Start Project",
+          hero_cta_secondary: "View Portfolio",
+          hero_card_title: "Innovation",
+          hero_card_subtitle: "Driven Development",
+
+          // Services Section
+          services_label: "OUR EXPERTISE",
+          services_title: "What We Create",
+          services_description: "From concept to implementation, we deliver technology solutions that transform the way you do business.",
+          service_1_title: "Software Development",
+          service_1_description: "Powerful web and mobile applications with optimal performance and extraordinary user experience.",
+          service_2_title: "UI/UX Design",
+          service_2_description: "Intuitive and engaging interface design with a focus on perfect user experience.",
+          service_3_title: "E-Commerce Solutions",
+          service_3_description: "Scalable e-commerce platforms with complete features to grow your online business.",
+          service_4_title: "Digital Consulting",
+          service_4_description: "Strategic consulting for your business digital transformation with a measured approach.",
+
+          // About Section
+          about_label: "ABOUT BLANKPOINT",
+          about_title: "Limitless Innovation for Digital Future",
+          about_paragraph_1:
+            "We are a passionate team of developers and designers committed to creating cutting-edge technology solutions. With more than 5 years of experience, we have helped dozens of clients realize their digital vision.",
+          about_paragraph_2: "Every project is a blank canvas that we fill with innovation, creativity, and the latest technology. From startups to enterprises, we are ready to be your trusted technology partner.",
+          about_cta: "Learn More About Us",
+          stat_projects: "Projects Done",
+          stat_clients: "Happy Clients",
+          stat_experience: "Years Experience",
+
+          // Portfolio Section
+          portfolio_label: "OUR PORTFOLIO",
+          portfolio_title: "Featured Projects",
+          portfolio_description: "Every project is a success story we are proud of. See how we turn ideas into digital reality.",
+          featured_badge: "Featured",
+          mobile_badge: "Mobile App",
+          project_1_title: "Blanksys Analytics",
+          project_1_description: "Comprehensive business analytics platform with real-time dashboard, advanced reporting, and AI-powered insights for better decision making.",
+          project_2_title: "Berkah Mobile Service",
+          project_2_description: "On-demand service mobile app that connects users with professional technicians. Features real-time tracking, payment gateway, and rating system.",
+          project_3_title: "DevOverflow",
+          project_3_description: "Q&A platform for developers with AI-powered solutions",
+          project_4_title: "Citraprasada",
+          project_4_description: "Architecture website with interactive gallery and virtual tour",
+          project_5_title: "Pinkine Store",
+          project_5_description: "Modern e-commerce with seamless checkout",
+          view_project: "View Project",
+          view_all_projects: "View All Projects",
+
+          // Contact Section
+          contact_label: "GET IN TOUCH",
+          contact_title: "Let's Connect",
+          contact_description: "Let's connect and discuss your creative ideas together",
+          whatsapp_text: "WhatsApp: +62 822-5450-0939",
+          email_text: "Email: ferdausalamsyah@gmail.com",
+
+          // Footer
+          footer_description: "Creating digital solutions that change the way the world works. From concept to implementation, we are the technology partner you need.",
+          footer_stat_projects: "Projects",
+          footer_stat_satisfaction: "Satisfaction",
+          footer_stat_years: "Years",
+          footer_services_title: "Services",
+          footer_service_1: "Web Development",
+          footer_service_2: "Mobile Apps",
+          footer_service_3: "UI/UX Design",
+          footer_service_4: "E-Commerce",
+          footer_service_5: "Digital Consulting",
+          footer_company_title: "Company",
+          footer_company_1: "About Us",
+          footer_company_2: "Our Team",
+          footer_company_3: "Portfolio",
+          footer_company_4: "Case Studies",
+          footer_company_5: "Contact",
+          footer_copyright: "&copy; 2025 Blankpoint. Crafted with ❤️ in Indonesia.",
+          footer_privacy: "Privacy Policy",
+          footer_terms: "Terms of Service",
+          footer_cookies: "Cookies",
+        },
+      };
+
+      // Current language state
+      let currentLanguage = "id";
+
+      // Initialize AOS
       AOS.init({
-        duration: 800,
-        easing: "ease-in-out",
-        once: false,
+        duration: 1000,
+        easing: "ease-out-cubic",
+        once: true,
+        offset: 100,
       });
 
-      // Mobile menu toggle
-      const mobileMenuButton = document.getElementById("mobile-menu-button");
+      // Mobile menu functionality
+      const mobileMenuBtn = document.getElementById("mobile-menu-btn");
       const mobileMenu = document.getElementById("mobile-menu");
+      const mobileMenuOverlay = document.getElementById("mobile-menu-overlay");
+      const hamburger = document.querySelector(".hamburger");
 
-      mobileMenuButton.addEventListener("click", () => {
-        mobileMenu.classList.toggle("hidden");
-        mobileMenu.classList.toggle("animate__fadeInDown");
+      function toggleMobileMenu() {
+        const isOpen = mobileMenu.classList.contains("active");
+
+        if (isOpen) {
+          closeMobileMenu();
+        } else {
+          openMobileMenu();
+        }
+      }
+
+      function openMobileMenu() {
+        mobileMenu.classList.add("active");
+        mobileMenuOverlay.classList.remove("opacity-0", "invisible");
+        mobileMenuOverlay.classList.add("opacity-100", "visible");
+        hamburger.classList.add("active");
+        document.body.style.overflow = "hidden";
+      }
+
+      function closeMobileMenu() {
+        mobileMenu.classList.remove("active");
+        mobileMenuOverlay.classList.remove("opacity-100", "visible");
+        mobileMenuOverlay.classList.add("opacity-0", "invisible");
+        hamburger.classList.remove("active");
+        document.body.style.overflow = "";
+      }
+
+      mobileMenuBtn.addEventListener("click", toggleMobileMenu);
+      mobileMenuOverlay.addEventListener("click", closeMobileMenu);
+
+      // Close mobile menu when clicking on nav links
+      document.querySelectorAll(".mobile-nav-link").forEach((link) => {
+        link.addEventListener("click", closeMobileMenu);
       });
 
-      // Smooth scrolling for navigation links
+      // Language switcher functionality
+      const langToggle = document.getElementById("lang-toggle");
+      const langDropdown = document.getElementById("lang-dropdown");
+      const langArrow = document.getElementById("lang-arrow");
+      const mobileLangToggle = document.getElementById("mobile-lang-toggle");
+
+      function toggleLanguageDropdown() {
+        const isOpen = langDropdown.classList.contains("active");
+
+        if (isOpen) {
+          langDropdown.classList.remove("active");
+          langArrow.style.transform = "rotate(0deg)";
+        } else {
+          langDropdown.classList.add("active");
+          langArrow.style.transform = "rotate(180deg)";
+        }
+      }
+
+      langToggle.addEventListener("click", toggleLanguageDropdown);
+
+      // Close dropdown when clicking outside
+      document.addEventListener("click", (e) => {
+        if (!langToggle.contains(e.target) && !langDropdown.contains(e.target)) {
+          langDropdown.classList.remove("active");
+          langArrow.style.transform = "rotate(0deg)";
+        }
+      });
+
+      // Translation function
+      function translatePage(lang) {
+        currentLanguage = lang;
+        const elements = document.querySelectorAll("[data-key]");
+
+        elements.forEach((element) => {
+          const key = element.getAttribute("data-key");
+          if (translations[lang] && translations[lang][key]) {
+            if (element.tagName === "INPUT" && element.type === "submit") {
+              element.value = translations[lang][key];
+            } else {
+              element.innerHTML = translations[lang][key];
+            }
+          }
+        });
+
+        // Update language switcher display
+        const flagClass = lang === "id" ? "fi-id" : "fi-us";
+        const langCode = lang.toUpperCase();
+
+        document.querySelector("#lang-toggle .fi").className = `fi ${flagClass} w-4 h-4 rounded-sm`;
+        document.querySelector("#lang-toggle span:last-child").textContent = langCode;
+        document.querySelector("#mobile-lang-toggle .fi").className = `fi ${flagClass} w-4 h-4 rounded-sm`;
+        document.querySelector("#mobile-lang-toggle span:last-child").textContent = langCode;
+
+        // Update document language
+        document.documentElement.lang = lang;
+
+        // Store language preference
+        localStorage.setItem("preferred-language", lang);
+      }
+
+      // Language option handlers
+      document.querySelectorAll(".lang-option, .mobile-lang-option").forEach((option) => {
+        option.addEventListener("click", (e) => {
+          const lang = e.currentTarget.getAttribute("data-lang");
+          translatePage(lang);
+          langDropdown.classList.remove("active");
+          langArrow.style.transform = "rotate(0deg)";
+        });
+      });
+
+      // Load saved language preference
+      const savedLanguage = localStorage.getItem("preferred-language") || "id";
+      if (savedLanguage !== "id") {
+        translatePage(savedLanguage);
+      }
+
+      // Smooth scrolling
       document.querySelectorAll('a[href^="#"]').forEach((anchor) => {
         anchor.addEventListener("click", function (e) {
           e.preventDefault();
           const target = document.querySelector(this.getAttribute("href"));
           if (target) {
-            target.scrollIntoView({
+            const offsetTop = target.offsetTop - 80;
+            window.scrollTo({
+              top: offsetTop,
               behavior: "smooth",
-              block: "start",
             });
-            // Close mobile menu if open
-            mobileMenu.classList.add("hidden");
           }
         });
       });
 
-      // Add scroll effect to navbar
+      // Navbar scroll effect
+      const navbar = document.getElementById("navbar");
       window.addEventListener("scroll", () => {
-        const navbar = document.querySelector("nav");
         if (window.scrollY > 50) {
-          navbar.classList.add("bg-white/95", "backdrop-blur-sm");
+          navbar.classList.add("backdrop-blur-xl");
+          navbar.style.background = "rgba(15, 23, 42, 0.98)";
         } else {
-          navbar.classList.remove("bg-white/95", "backdrop-blur-sm");
+          navbar.classList.remove("backdrop-blur-xl");
+          navbar.style.background = "rgba(15, 23, 42, 0.95)";
         }
       });
 
-      // Number counting animation
+      // Counter animation
+      let counterAnimated = false;
+
       function animateCounters() {
-        const counters = document.querySelectorAll(".animate-count");
-        const speed = 200;
+        if (counterAnimated) return;
+        counterAnimated = true;
+
+        const counters = document.querySelectorAll(".counter");
 
         counters.forEach((counter) => {
-          const target = +counter.getAttribute("data-count");
-          const count = +counter.innerText;
-          const increment = target / speed;
+          const target = parseInt(counter.getAttribute("data-target"));
+          const duration = 2000; // 2 seconds
+          const step = target / (duration / 16); // 60fps
+          let current = 0;
 
-          if (count < target) {
-            counter.innerText = Math.ceil(count + increment);
-            setTimeout(animateCounters, 1);
-          } else {
-            counter.innerText = target;
-          }
+          const updateCounter = () => {
+            if (current < target) {
+              current += step;
+              counter.textContent = Math.min(Math.ceil(current), target);
+              requestAnimationFrame(updateCounter);
+            } else {
+              counter.textContent = target;
+            }
+          };
+
+          updateCounter();
         });
       }
 
-      // Start counting when about section is in view
+      // Start counter when about section is visible
       const aboutSection = document.querySelector("#about");
       const observer = new IntersectionObserver(
         (entries) => {
           entries.forEach((entry) => {
             if (entry.isIntersecting) {
               animateCounters();
-              observer.unobserve(entry.target);
             }
           });
         },
         { threshold: 0.5 }
       );
 
-      observer.observe(aboutSection);
+      if (aboutSection) {
+        observer.observe(aboutSection);
+      }
 
-      // Add hover effect to all buttons
+      // Enhanced button interactions
       document.querySelectorAll("button").forEach((button) => {
-        button.addEventListener("mouseenter", () => {
-          button.classList.add("transform", "scale-105");
-        });
-        button.addEventListener("mouseleave", () => {
-          button.classList.remove("transform", "scale-105");
+        button.addEventListener("click", function (e) {
+          // Create ripple effect
+          const rect = this.getBoundingClientRect();
+          const ripple = document.createElement("span");
+          const size = Math.max(rect.width, rect.height);
+          const x = e.clientX - rect.left - size / 2;
+          const y = e.clientY - rect.top - size / 2;
+
+          ripple.style.cssText = `
+            position: absolute;
+            width: ${size}px;
+            height: ${size}px;
+            left: ${x}px;
+            top: ${y}px;
+            background: rgba(255,255,255,0.3);
+            border-radius: 50%;
+            transform: scale(0);
+            animation: ripple 0.6s linear;
+            pointer-events: none;
+          `;
+
+          // Add ripple keyframes if not exists
+          if (!document.querySelector("#ripple-styles")) {
+            const style = document.createElement("style");
+            style.id = "ripple-styles";
+            style.textContent = `
+              @keyframes ripple {
+                to {
+                  transform: scale(2);
+                  opacity: 0;
+                }
+              }
+            `;
+            document.head.appendChild(style);
+          }
+
+          this.style.position = "relative";
+          this.style.overflow = "hidden";
+          this.appendChild(ripple);
+
+          setTimeout(() => {
+            ripple.remove();
+          }, 600);
         });
       });
+
+      // Parallax effect for hero elements
+      window.addEventListener("scroll", () => {
+        const scrolled = window.pageYOffset;
+        const parallaxElements = document.querySelectorAll(".animate-float");
+
+        parallaxElements.forEach((element, index) => {
+          const speed = 0.3 + index * 0.1;
+          element.style.transform = `translateY(${scrolled * speed}px)`;
+        });
+      });
+
+      // Intersection Observer for animations
+      const observerOptions = {
+        threshold: 0.1,
+        rootMargin: "0px 0px -50px 0px",
+      };
+
+      const animationObserver = new IntersectionObserver((entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add("animate-slide-up");
+          }
+        });
+      }, observerOptions);
+
+      // Observe all cards and sections
+      document.querySelectorAll(".tech-card, .project-card").forEach((card) => {
+        animationObserver.observe(card);
+      });
+
+      // Enhanced hover effects
+      document.querySelectorAll(".hover-lift").forEach((element) => {
+        element.addEventListener("mouseenter", function () {
+          this.style.transform = "translateY(-12px) scale(1.03)";
+          this.style.boxShadow = "0 25px 50px rgba(0, 0, 0, 0.2)";
+        });
+
+        element.addEventListener("mouseleave", function () {
+          this.style.transform = "translateY(0) scale(1)";
+          this.style.boxShadow = "0 10px 25px rgba(0, 0, 0, 0.1)";
+        });
+      });
+
+      // Contact form enhancement (if added later)
+      document.querySelectorAll('a[href^="mailto:"], a[href^="https://wa.me/"]').forEach((link) => {
+        link.addEventListener("click", function () {
+          // Add click tracking or analytics here
+          console.log(`Contact method clicked: ${this.href}`);
+        });
+      });
+
+      // Lazy loading for images
+      const imageObserver = new IntersectionObserver((entries, observer) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            const img = entry.target;
+            img.classList.add("fade-in");
+            observer.unobserve(img);
+          }
+        });
+      });
+
+      document.querySelectorAll("img").forEach((img) => {
+        imageObserver.observe(img);
+      });
+
+      // Performance optimization: Debounced scroll handler
+      function debounce(func, wait) {
+        let timeout;
+        return function executedFunction(...args) {
+          const later = () => {
+            clearTimeout(timeout);
+            func(...args);
+          };
+          clearTimeout(timeout);
+          timeout = setTimeout(later, wait);
+        };
+      }
+
+      const debouncedScrollHandler = debounce(() => {
+        // Add any additional scroll-based functionality here
+      }, 10);
+
+      window.addEventListener("scroll", debouncedScrollHandler);
+
+      console.log("Blankpoint website initialized successfully! 🚀");
     </script>
   </body>
 </html>
